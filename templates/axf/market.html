@@ -1,0 +1,90 @@
+{% extends 'axf/base.html' %}
+{% load static from staticfiles %}
+{% block linkscript %}
+    <link rel="stylesheet" type="text/css" href="{% static 'market/css/market.css'%}" />
+    <script type="text/javascript" charset="utf-8" src="{% static 'market/js/market.js' %}"></script>
+{% endblock linkscript %}
+
+
+
+{% block base %}
+<div id="market">
+    <aside>
+        <menu>
+            <ul>
+                {% for item in leftSlider %}
+                <li>
+                    {% if item.typeid == foodtypeid %}
+                       <span class="yellowSlide"></span>
+                    {% endif %}
+                    <a href="{% url 'axf:market' item.typeid '0' '0' %}">{{item.typename}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </menu>
+    </aside>
+
+
+
+    <section>
+        <nav>
+            <ul>
+                <li><span id="alltypebtn">全部类型<span class="glyphicon glyphicon-chevron-down" style="font-weight: 100"></span></span></li>
+				<li><span id="showsortbtn">综合排序<span class="glyphicon glyphicon-chevron-down" style="font-weight: 100"></span></span></li>
+            </ul>
+        </nav>
+
+
+
+        <menu>
+            <ul>
+                {% for item in productList %}
+                <li>
+                    <a href="#">
+                        <img src="{{item.productimg}}" />
+                        <article class="shoppingInfo">
+                            <h6>{{item.productlongname}}</h6>
+                            <p class="detailTag"><span>精选</span><span>{{item.pedesc}}</span></p>
+                            <span class="unit">{{item.specifics}} &nbsp;&nbsp;  销量 {{ item.productnum }}</span>
+                            <p class="price"><span>￥{{item.price}}</span><s><span>￥{{item.marketprice}}</span></s></p>
+                        </article>
+                    </a>
+                    <section>
+						<button ga="{{item.id}}" class="subShopping">-</button>
+                        <span id="{{item.id}}">
+                            {% if request.session.user_id %}
+                                {{ item.cart_num }}
+                            {% else %}
+                                0
+                            {% endif %}
+                        </span>
+						<button ga="{{item.id}}" class="addShopping">+</button>
+					</section>
+                </li>
+                {% endfor %}
+            </ul>
+            <div id="typediv">
+                <div>
+                    {% for childname,childid in child_dict.items %}
+                    <a href="{% url 'axf:market' foodtypeid childid '0' %}"><span>{{childname}}</span></a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div id="sortdiv">
+                <div>
+                    <a href="{% url 'axf:market' foodtypeid childtypeid '0' %}" class="sorta"><span>综合排序</span></a>
+                    <a href="{% url 'axf:market' foodtypeid childtypeid '1' %}" class="sorta"><span>销量排序</span></a>
+                    <a href="{% url 'axf:market' foodtypeid childtypeid '2' %}" class="sorta"><span>价格最低</span></a>
+                    <a href="{% url 'axf:market' foodtypeid childtypeid '3' %}" class="sorta"><span>价格最高</span></a>
+                </div>
+            </div>
+        </menu>
+
+
+
+    </section>
+
+
+</div>
+{% endblock base %}

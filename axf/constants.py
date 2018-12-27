@@ -1,0 +1,9 @@
+ORDER_STATE_NO_PAY=0#已下单，未付款
+
+ORDER_STATE_PAIED=1#已下单，未付款
+
+
+
+NOACCEPT_NO_JUDGEMENT=2# 未收到货，未评价
+ACCEPT_NO_JUDGEMENT=3# 已经收到货，但未评价
+ACCEPT_JUDGEMENT=4 #已经收到货，已经评价

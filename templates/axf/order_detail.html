@@ -1,0 +1,63 @@
+{% load static %}
+
+{#    <link rel="stylesheet" type="text/css" href="{% static 'order/css/order.css'%}" />#}
+    <script type="text/javascript" charset="utf-8" src="{% static 'main/js/jquery-3.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'order/js/order.js' %}"></script>
+
+
+
+
+
+{#<h3>订单号：{{ order.id }}</h3>#}
+{#<h3>下单时间：{{ order.ordertime }}</h3>#}
+
+
+<ul>
+    {% for ore in order %}
+        <h3>订单号：{{ ore.id }}</h3>
+        <h3>下单时间：{{ ore.ordertime }}</h3>
+        {% for order_goods in ore.ordergoods_set.all %}
+            <li class="menuList">
+                <img src="{{ order_goods.goods.productimg }}"><br>
+                {{ order_goods.goods.productlongname }}
+                {{ order_goods.goods.price }}
+                {{ order_goods.goods_num }}
+            </li>
+        {% endfor %}
+        <h3>总价：{{ ore.totalPrice }}</h3>
+        <button id="payBtn" ga="{{ ore.id }}" style="background-color: red;width:100px;height:80px">付款</button>
+    {% endfor %}
+</ul>
+
+
+{#<button id="payBtn" ga="{{ order.id }}" style="background-color: red;width:100px;height:80px">付款</button>#}
+
+
+    <a class="home" href="{% url 'axf:home' %}">
+        <dl>
+            <dt><span></span></dt>
+            <dd>主页</dd>
+        </dl>
+    </a>
+{#        {% url 'axf:market' '104749' '0' '0'#}
+    <a class="market" href="{% url 'axf:market' '104749' '0' '0'%}">
+        <dl>
+            <dt><span></span></dt>
+            <dd>闪送超市</dd>
+        </dl>
+    </a>
+
+    <a class="cart" href="{% url 'axf:gocart' %}">
+        <dl>
+            <dt><span></span></dt>
+            <dd>购物车</dd>
+        </dl>
+    </a>
+
+    <a class="mine" href="{% url 'axf:mine' %}">
+        <dl>
+            <dt><span></span></dt>
+            <dd>我的</dd>
+        </dl>
+    </a>
+
